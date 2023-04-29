@@ -17,13 +17,16 @@ function ChatRoomsList({ users, selectedRoom, setSelectedRoom }) {
 
   return (
     <>
-      <TextField
-        name="userSearch"
-        label="Search By Name"
-        type="search"
-        variant="filled"
-        onChange={handleSearch}
-      />
+      <div className="input-wrapper">
+        <TextField
+          name="userSearch"
+          label="Search By Name"
+          type="search"
+          variant="filled"
+          onChange={handleSearch}
+          className="chat-room-filter-input"
+        />
+      </div>
       <div className="chat-rooms-list">
         {filteredUsers.map((user) => (
           <Room
