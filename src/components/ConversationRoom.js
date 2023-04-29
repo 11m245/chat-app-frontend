@@ -51,9 +51,11 @@ function ConversationRoom({ users, setSelectedRoom, selectedRoom }) {
         </div>
       </div>
       <div className="conversation-room-body">
-        {roomMessages.map((message) => (
-          <Message message={message} />
-        ))}
+        <div className="messages-container">
+          {roomMessages.map((message) => (
+            <Message message={message} />
+          ))}
+        </div>
       </div>
       <div className="conversation-room-footer p-4">
         {/* <input type="text" /> */}
