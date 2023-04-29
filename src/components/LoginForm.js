@@ -39,6 +39,7 @@ function LoginForm() {
       if (fetchResponse.status === 200) {
         const data = await fetchResponse.json();
         localStorage.setItem("logintoken", data.payload.token);
+        localStorage.setItem("chatEmail", data.payload.email);
         toast.success(data.message);
         navigate("/user");
       } else {

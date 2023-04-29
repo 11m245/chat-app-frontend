@@ -1,7 +1,8 @@
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SendIcon from "@mui/icons-material/Send";
-import { useState } from "react";
+import { TextField } from "@mui/material";
+import { useEffect, useState } from "react";
 function ConversationRoom({ users, setSelectedRoom, selectedRoom }) {
   const roomMessages = [
     { content: "hi1", from: "id1", to: "id2", createAt: 12345 },
@@ -13,22 +14,38 @@ function ConversationRoom({ users, setSelectedRoom, selectedRoom }) {
     _id: 1,
     lastSeen: 1682441599000,
     mobile: 9500852762,
+    email: "new@gmail.com",
   };
-  // const [user, setUser] = useState(user[0]);
+  const [currentRoom, setCurrentRoom] = useState(user);
+  let toMail;
+  useEffect(() => {
+    console.log("selected room", selectedRoom);
+    toMail = selectedRoom
+      .split("_")
+      .filter((email) => localStorage.getItem("chatEmail") !== email);
+    console.log("toMail", toMail);
+    setCurrentRoom(users.find((user) => user.email === toMail[0]));
+  }, [selectedRoom]);
   return (
     <div className="conversation-room">
-      <div className="conversation-room-header">
+      <div className="conversation-room-header header">
         <div className="left">
-          <img src={user.image} alt={`${user.name}`} />
+          <img
+            src={
+              currentRoom.image ||
+              "https://icon2.cleanpng.com/20180615/hxf/kisspng-avatar-user-profile-male-logo-profile-icon-5b238cafcb8559.4398361515290564318336.jpg"
+            }
+            alt={`${currentRoom.name}`}
+          />
           <div className="name-mobile">
-            <p>
-              {user.name} - {user.mobile}
-            </p>
-            <p>{user.lastSeen}</p>
+            <span>
+              {currentRoom.name} - {currentRoom.mobile}
+            </span>
+            <span>{currentRoom.lastSeen}</span>
           </div>
         </div>
         <div className="right">
-          <IconButton color="secondary" aria-label="back">
+          <IconButton sx={{ color: "white" }} aria-label="back">
             <ArrowBackIcon onClick={() => setSelectedRoom(null)} />
           </IconButton>
         </div>
@@ -38,9 +55,10 @@ function ConversationRoom({ users, setSelectedRoom, selectedRoom }) {
           <Message message={message} />
         ))}
       </div>
-      <div className="conversation-room-footer">
-        <input type="text" />
-        <SendIcon />
+      <div className="conversation-room-footer p-4">
+        {/* <input type="text" /> */}
+        <TextField fullWidth label="Enter Message" id="message-input" />
+        <SendIcon color="primary" />
       </div>
     </div>
   );
