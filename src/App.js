@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import "react-toastify/dist/ReactToastify.min.css";
+
+import { Routes, Route } from "react-router-dom";
+import { SignupPage } from "./pages/user/SignupPage";
+import { ForgotPage } from "./pages/user/ForgotPage";
+import { LoginPage } from "./pages/user/LoginPage";
+import { ToastContainer } from "react-toastify";
+import { createContext } from "react";
+import { ChatPage } from "./pages/user/ChatPage";
+import { io } from "socket.io-client";
+export const socket = io(process.env.REACT_APP_SERVER_API);
+
+export const appContext = createContext();
 
 function App() {
+  const appContextObj = {};
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ToastContainer theme="light" autoClose={3000} />
+      <appContext.Provider value={appContextObj}>
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/forgot" element={<ForgotPage />} />
+          <Route path="/user" element={<ChatPage />} />
+        </Routes>
+      </appContext.Provider>
     </div>
   );
 }
