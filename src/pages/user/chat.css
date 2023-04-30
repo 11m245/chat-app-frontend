@@ -1,16 +1,19 @@
+.chat-page-container{
+    width: 100%;
+    height: 100%;
+
+}
 .chat-header{
 width: 100%;
 height: 80px;
 display: flex;
 justify-content: space-between;
-border: 2px solid red;
 padding-inline: 20px;
-/* align-items: center; */
-overflow: hidden;
 position: fixed;
 top: 0;
-left: 0;
+
 }
+
 
 .chat-header img{
     max-width: 100%;
@@ -24,18 +27,23 @@ left: 0;
     top: 80px;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    height: calc(100dvh - 80px);
+    overflow: scroll;
 }
 
 
 .input-wrapper{
+    position: fixed;
     width: 100%;
     display: flex;
     justify-content: center;
+    position: relative;
+        top: 80px;
 }
 .chat-room-filter-input{
     width: 80%;
-    position: relative;
-    top: 80px;
+    
 }
 .room-wrapper{
     display: flex;
@@ -45,7 +53,11 @@ left: 0;
     height: 60px;  
     margin-block: 10px;
     padding: 10px;
-    border: 2px solid green;
+    /* border: 2px solid green; */
+}
+
+.selected-room{
+    color: #0088cc;
 }
 .room-wrapper img {
    height: 50px;
@@ -125,7 +137,10 @@ box-shadow: rgba(0, 0, 0, 0.52) 0px 1px 3px, rgba(0, 0, 0, 0.44) 0px 3px 6px;
 }
 .conversation-room-body{
 height: calc(100dvh - 160px);
-padding-top: 80px;
+position: relative;
+top: 80px;
+overflow: scroll;
+/* padding-top: 80px; */
 }
 .header{
     background-color: #0088cc;

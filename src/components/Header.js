@@ -7,7 +7,6 @@ function Header() {
 
   const logout = () => {
     localStorage.removeItem("logintoken");
-    localStorage.removeItem("email");
     navigate("/");
   };
   return (

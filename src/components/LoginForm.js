@@ -4,7 +4,10 @@ import { toast } from "react-toastify";
 import * as yup from "yup";
 import "./Forms.css";
 import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { appContext } from "../App";
 function LoginForm() {
+  const { currentUser, setCurrentUser, socket } = useContext(appContext);
   const navigate = useNavigate();
   const loginFormInitialValuesObj = { email: "", password: "" };
 
@@ -40,6 +43,7 @@ function LoginForm() {
         const data = await fetchResponse.json();
         localStorage.setItem("logintoken", data.payload.token);
         localStorage.setItem("chatEmail", data.payload.email);
+        setCurrentUser({ email: data.payload.email });
         toast.success(data.message);
         navigate("/user");
       } else {
