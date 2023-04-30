@@ -17,12 +17,8 @@ function ChatRoomsList() {
   };
 
   useEffect(() => {
-    socket.off("new-user").on("new-user", (allUsers) => {
-      // console.log("listening on new user event", allUsers);
-      setUsers(allUsers);
-    });
     setFilteredUsers(users);
-  }, []);
+  }, [users]);
 
   return (
     <>
@@ -62,7 +58,7 @@ function Room({ user }) {
             ? currentUser.email + "," + user.email
             : user.email + "," + currentUser.email;
         setSelectedRoom(result);
-        console.log("1 selected room res", selectedRoom, result);
+        // console.log("1 selected room res", selectedRoom, result);
       }}
     >
       <div className="left">
@@ -83,7 +79,11 @@ function Room({ user }) {
           />
         </div>
         <div className="name-mobile">
-          <span>{user.name}</span>
+          <span>
+            {user.email === currentUser.email
+              ? user.name + "  (self)"
+              : user.name}
+          </span>
           <span>{user.mobile}</span>
         </div>
       </div>

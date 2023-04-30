@@ -4,18 +4,21 @@ import { Header } from "../../components/Header";
 import { ConversationRoom } from "../../components/ConversationRoom";
 import { ChatRoomsList } from "../../components/ChatRoomsList";
 function ChatPage() {
-  const { selectedRoom, setSelectedRoom, socket, users, setUsers } =
-    useContext(appContext);
-  useEffect(() => {
-    socket.emit("new_user");
-  }, []);
+  const {
+    selectedRoom,
+    setSelectedRoom,
+    socket,
+    users,
+    setUsers,
+    currentUser,
+  } = useContext(appContext);
 
   useEffect(() => {
-    socket.on("all_users", (data) => {
-      console.log(" listen all_users", data);
+    socket.emit("new_user", currentUser.email);
+    socket.on("updated_users", (data) => {
       setUsers(data);
     });
-  }, []);
+  }, [socket]);
   return (
     <>
       <div className="page chat-page-container">

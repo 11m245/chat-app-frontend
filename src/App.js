@@ -16,7 +16,7 @@ export const appContext = createContext();
 function App() {
   const [newMessage, setNewMessage] = useState("");
   const [currentUser, setCurrentUser] = useState("");
-  const [roomMessages, setRoomMessages] = useState([]);
+  const [roomMessages, setRoomMessages] = useState(null);
   const [users, setUsers] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState("");
   const appContextObj = {

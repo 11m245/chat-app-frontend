@@ -146,3 +146,33 @@ overflow: scroll;
     background-color: #0088cc;
     color: white;
 }
+
+.message-wrapper{
+    background-color: blueviolet;
+    padding: 5px 10px;
+    margin: 10px;
+    max-width: 400px;
+    border-radius: 10px;
+    color: aliceblue;
+    }
+.name-time-wrapper{
+    display: flex;   
+    opacity: 0.5;   
+    justify-content: space-between;
+}
+/* .message-from{
+    justify-self: start;
+ 
+}
+.message-time{
+   margin-left: auto;
+} */
+
+.name-time-wrapper > p {
+ margin: 0;
+
+}
+
+.message-content{
+   margin: 0 0 5px 0;
+}
