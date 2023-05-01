@@ -168,8 +168,8 @@ function Message({ message }) {
       className="message-wrapper"
       style={
         message.from === currentUser.email
-          ? { marginLeft: "auto", backgroundColor: "#ACDDDE" }
-          : { marginRight: "auto", backgroundColor: "#F7D8BA" }
+          ? { marginLeft: "auto", backgroundColor: "#F7D8BA" }
+          : { marginRight: "auto", backgroundColor: "#ACDDDE" }
       }
     >
       <p className="message-content">{message.content}</p>
