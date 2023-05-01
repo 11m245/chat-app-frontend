@@ -11,12 +11,19 @@ justify-content: space-between;
 padding-inline: 20px;
 position: fixed;
 top: 0;
+z-index: 1;
 
 }
 
 
 .chat-header img{
     max-width: 100%;
+}
+
+.chat-room-body{
+    width: 100%;
+    height: calc(100dvh - 80px);
+    overflow-y: scroll;
 }
 
 
@@ -116,6 +123,7 @@ box-shadow: rgba(0, 0, 0, 0.52) 0px 1px 3px, rgba(0, 0, 0, 0.44) 0px 3px 6px;
 
 
 
+
 .conversation-room-footer {
     height: 80px;
     display: flex;
@@ -148,12 +156,12 @@ overflow: scroll;
 }
 
 .message-wrapper{
-    background-color: blueviolet;
+  
     padding: 5px 10px;
     margin: 10px;
     max-width: 400px;
     border-radius: 10px;
-    color: aliceblue;
+    
     }
 .name-time-wrapper{
     display: flex;   
@@ -175,4 +183,13 @@ overflow: scroll;
 
 .message-content{
    margin: 0 0 5px 0;
+}
+
+/* mediaqueries */
+
+@media screen and (min-width: 480px) {
+    .conversation-room-header .header-name {
+            font-size: 25px !important;
+    
+        }
 }

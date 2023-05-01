@@ -21,7 +21,7 @@ function ChatRoomsList() {
   }, [users]);
 
   return (
-    <>
+    <div className="chat-room-body">
       <div className="input-wrapper">
         <TextField
           name="userSearch"
@@ -39,7 +39,7 @@ function ChatRoomsList() {
           <p>No Users</p>
         )}
       </div>
-    </>
+    </div>
   );
 }
 

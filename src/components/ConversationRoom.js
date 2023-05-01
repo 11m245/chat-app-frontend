@@ -2,9 +2,10 @@ import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SendIcon from "@mui/icons-material/Send";
 import { TextField } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { appContext, socket } from "../App.js";
 import moment from "moment";
+import { toast } from "react-toastify";
 function ConversationRoom() {
   const {
     currentUser,
@@ -18,6 +19,7 @@ function ConversationRoom() {
   } = useContext(appContext);
   const [currentRoom, setCurrentRoom] = useState("");
   const [currentMessage, setCurrentMessage] = useState("");
+  const messagesEndRef = useRef(null);
 
   const sendMessage = () => {
     // console.log("trying to send", currentMessage);
@@ -31,6 +33,28 @@ function ConversationRoom() {
       setCurrentMessage("");
     } else {
       return;
+    }
+  };
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const updateRoomMessages = async (selectedRoom) => {
+    const messageRes = await fetch(
+      `${process.env.REACT_APP_SERVER_API}/roomMessages`,
+      {
+        headers: { selectedroom: selectedRoom },
+      }
+    );
+    console.log("got Resp", messageRes);
+    if (messageRes.status === 200) {
+      const data = await messageRes.json();
+      setRoomMessages(data.payload.messages);
+      toast.success(data.message);
+    } else {
+      const data = await messageRes.json();
+      toast.error(data.message);
     }
   };
 
@@ -49,18 +73,30 @@ function ConversationRoom() {
   useEffect(() => {
     setRoomMessages(null);
     socket.emit("join_room", selectedRoom);
-    socket.on("receive_room_messages", (rmMessages) => {
-      console.log("got room Messages", rmMessages);
-      setRoomMessages(rmMessages);
-    });
+    updateRoomMessages(selectedRoom);
+    // socket.on("receive_room_messages", (rmMessages) => {
+    //   // console.log("got room Messages", rmMessages);
+    //   setRoomMessages(rmMessages);
+    // });
   }, [selectedRoom]);
 
   useEffect(() => {
     socket.on("receive_room_messages", (rmMessages) => {
-      console.log("got room Messages", rmMessages);
+      // console.log("got room Messages", rmMessages);
       setRoomMessages(rmMessages);
     });
   }, [socket]);
+
+  // useEffect(() => {
+  //   socket.on("receive_room_messages", (rmMessages) => {
+  //     // console.log("got room Messages", rmMessages);
+  //     setRoomMessages(rmMessages);
+  //   });
+  // });
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [roomMessages]);
   return (
     <div className="conversation-room">
       <div className="conversation-room-header header">
@@ -73,7 +109,7 @@ function ConversationRoom() {
             alt={`${currentRoom.name}`}
           />
           <div className="name-mobile">
-            <span style={{ fontSize: "20px" }}>
+            <span className="header-name" style={{ fontSize: "14px" }}>
               {currentRoom.name} - {currentRoom.mobile}
             </span>
             <span>
@@ -99,16 +135,12 @@ function ConversationRoom() {
       </div>
       <div className="conversation-room-body">
         <div className="messages-container">
-          {/* {roomMessages?.length > 0 ? (
-            <p>No messages</p>
-          ) : (
-            roomMessages?.map((message) => <Message message={message} />)
-          )} */}
           {roomMessages
             ? roomMessages.map((message) => (
                 <Message key={message._id} message={message} />
               ))
             : null}
+          <div ref={messagesEndRef}></div>
         </div>
       </div>
       <div className="conversation-room-footer p-4">
@@ -132,7 +164,14 @@ function ConversationRoom() {
 function Message({ message }) {
   const { currentUser } = useContext(appContext);
   return (
-    <div className="message-wrapper">
+    <div
+      className="message-wrapper"
+      style={
+        message.from === currentUser.email
+          ? { marginLeft: "auto", backgroundColor: "#ACDDDE" }
+          : { marginRight: "auto", backgroundColor: "#F7D8BA" }
+      }
+    >
       <p className="message-content">{message.content}</p>
       <div className="name-time-wrapper">
         <p className="message-from">
