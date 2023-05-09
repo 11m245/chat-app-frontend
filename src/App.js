@@ -6,7 +6,7 @@ import { SignupPage } from "./pages/user/SignupPage";
 import { ForgotPage } from "./pages/user/ForgotPage";
 import { LoginPage } from "./pages/user/LoginPage";
 import { ToastContainer } from "react-toastify";
-import { createContext, useRef, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import { ChatPage } from "./pages/user/ChatPage";
 import { io } from "socket.io-client";
 export const socket = io(process.env.REACT_APP_SERVER_API);
@@ -19,6 +19,9 @@ function App() {
   const [roomMessages, setRoomMessages] = useState(null);
   const [users, setUsers] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState("");
+  const [isMobile, setIsMobile] = useState(
+    window.innerWidth < 720 ? true : false
+  );
   const appContextObj = {
     newMessage,
     setNewMessage,
@@ -31,7 +34,18 @@ function App() {
     setUsers,
     selectedRoom,
     setSelectedRoom,
+    isMobile,
   };
+
+  function handleResize() {
+    window.innerWidth < 720 ? setIsMobile(true) : setIsMobile(false);
+  }
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  });
   return (
     <div className="App">
       <ToastContainer theme="light" autoClose={3000} />

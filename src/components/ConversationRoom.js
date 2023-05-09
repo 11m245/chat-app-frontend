@@ -162,18 +162,29 @@ function ConversationRoom() {
 }
 
 function Message({ message }) {
-  const { currentUser } = useContext(appContext);
+  const { currentUser, isMobile } = useContext(appContext);
   return (
     <div
       className="message-wrapper"
       style={
         message.from === currentUser.email
-          ? { marginLeft: "auto", backgroundColor: "#F7D8BA" }
-          : { marginRight: "auto", backgroundColor: "#ACDDDE" }
+          ? {
+              marginLeft: "auto",
+              backgroundColor: "#F7D8BA",
+              maxWidth: isMobile ? "200px" : "400px",
+            }
+          : {
+              marginRight: "auto",
+              backgroundColor: "#ACDDDE",
+              maxWidth: isMobile ? "200px" : "400px",
+            }
       }
     >
       <p className="message-content">{message.content}</p>
-      <div className="name-time-wrapper">
+      <div
+        className="name-time-wrapper"
+        style={isMobile ? { flexWrap: "wrap" } : null}
+      >
         <p className="message-from">
           {message.from === currentUser.email ? null : message.from}
         </p>
