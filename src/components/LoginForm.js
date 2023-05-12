@@ -42,7 +42,7 @@ function LoginForm() {
           headers: { "Content-Type": "application/json" },
         }
       );
-      console.log("fetch Response login", fetchResponse);
+      // console.log("fetch Response login", fetchResponse);
       if (fetchResponse.status === 200) {
         setIsLoading(false);
         const data = await fetchResponse.json();
