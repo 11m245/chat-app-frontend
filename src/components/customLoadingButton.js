@@ -4,7 +4,7 @@ function CustomLoadingButton({ isLoading, setIsLoading, buttonComponent }) {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 10000);
   }, [isLoading]);
   return (
     <>
