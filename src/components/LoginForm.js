@@ -39,6 +39,7 @@ function LoginForm() {
           headers: { "Content-Type": "application/json" },
         }
       );
+      console.log("fetch Response login", fetchResponse);
       if (fetchResponse.status === 200) {
         const data = await fetchResponse.json();
         localStorage.setItem("logintoken", data.payload.token);
